@@ -2,6 +2,7 @@
 # Project Specific
 test/
 polyinterface
+polyinterface/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
