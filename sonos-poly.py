@@ -34,14 +34,17 @@ class Controller(polyinterface.Controller):
         """
         pass
 
-    def discover(self):
+    def discover(self, command = None):
         LOGGER.info('Starting Speaker Discovery...')
         speakers = soco.discover()
         if speakers:
-            LOGGER.info('Found {} Speaker(s).'.format(len(speakers)))
+            LOGGER.info('Found {} Speaker(s)'.format(len(speakers)))
             for speaker in speakers:
                 address = speaker.uid[8:22].lower()
-                self.addNode(Speaker(self, self.address, address, speaker.player_name, speaker.ip_address))
+                if address not in self.nodes:
+                    self.addNode(Speaker(self, self.address, address, speaker.player_name, speaker.ip_address))
+                else:
+                    LOGGER.info('Speaker {} already configured.'.format(speaker.player_name))
         else:
             LOGGER.info('No Speakers found. Are they powered on?')
 
@@ -51,13 +54,12 @@ class Speaker(polyinterface.Node):
     def __init__(self, parent, primary, address, name, ip):
         self.ip = ip
         self.zone = soco.SoCo(self.ip)
-        LOGGER.info('Adding new Sonos Speaker: {}@{} Current Volume: {}'\
+        LOGGER.info('Sonos Speaker: {}@{} Current Volume: {}'\
                     .format(name, ip, self.zone.volume))
         super(Speaker, self).__init__(parent, primary, address, 'Sonos {}'.format(name))
 
     def start(self):
-        LOGGER.info("{} added. Updating information in ISY.".format(self.name))
-        self.update()
+        LOGGER.info("{} ready to rock!".format(self.name))
 
     def update(self):
         try:
@@ -102,19 +104,19 @@ class Speaker(polyinterface.Node):
         val = command.get('value')
         if val:
             self.zone.volume = int(val)
-            self.setDriver('ST', int(val), 56)
+            self.setDriver('ST', int(val))
 
     def _bass(self, command):
         val = command.get('value')
         if val > -11 or val < 11:
             self.zone.bass = val
-            self.setDriver('GV1', int(val), 56)
+            self.setDriver('GV1', int(val))
 
     def _treble(self, command):
         val = command.get('value')
         if val > -11 or val < 11:
             self.zone.treble = val
-            self.setDriver('GV2', int(val), 56)
+            self.setDriver('GV2', int(val))
 
     drivers = [{'driver': 'GV1', 'value': 0, 'uom': '56'},
                 {'driver': 'GV2', 'value': 0, 'uom': '56'},
