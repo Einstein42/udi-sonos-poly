@@ -1,8 +1,11 @@
 {
     "name": "Sonos",
-    "docs": "https://www.google.com",
+    "docs": "https://github.com/Einstein42/udi-sonos-poly",
     "type": "python",
     "executable": "udi-sonos.py",
+    "install": "install.sh",
+    "shortPoll": "5",
+    "longPoll": "30",
     "description": "Add Sonos control to the ISY994.",
     "notice": "\"Sonos\" is trademarked., see http://www.sonos.com for more information. This Node Server is neither developed by nor endorsed by Sonos.",
     "credits": [
@@ -11,8 +14,8 @@
             "author": "James Milne (Einstein.42)",
             "version": "2.0.0",
             "date": "December 12th, 2017",
-            "source": "https://github.com/Einstein42/myq-garage",
-            "license": "https://github.com/Einstein42/myq-garage/blob/master/LICENSE"
+            "source": "https://github.com/Einstein42/udi-sonos-poly",
+            "license": "https://raw.githubusercontent.com/Einstein42/udi-sonos-poly/master/LICENSE"
         }
     ]
 }
