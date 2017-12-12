@@ -1,6 +1,6 @@
 <editors>
     <editor id="sspkst">
-        <range uom="2" subset="0,1" />
+        <range uom="2" />
     </editor>
 	<editor id="sinc">
         <range uom="56" min="-10" max="10" step="1" />

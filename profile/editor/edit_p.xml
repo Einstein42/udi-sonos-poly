@@ -1,0 +1,6 @@
+<editors>
+    <!-- Boolean -->
+    <editor id="bool">
+        <range uom="2" />
+    </editor>
+</editors>

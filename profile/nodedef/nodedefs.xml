@@ -1,15 +1,4 @@
 <nodeDefs>
-    <!-- Sonos Control -->
-    <nodeDef id="sonoscontrol" nls="sctl">
-        <editors />
-        <sts />
-        <cmds>
-            <sends />
-            <accepts>
-			    <cmd id="DISCOVER" />
-		    </accepts>
-        </cmds>
-    </nodeDef>
 	<!-- Sonos Speakers -->
     <nodeDef id="sonosspeaker" nls="sspk">
         <editors />

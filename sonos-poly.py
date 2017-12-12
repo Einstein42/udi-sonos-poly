@@ -12,7 +12,7 @@ import json
 
 LOGGER = polyinterface.LOGGER
 SERVERDATA = json.load(open('server.json'))
-VERSION = SERVERDATA['credits']['version']
+VERSION = SERVERDATA['credits'][0]['version']
 
 class Controller(polyinterface.Controller):
     def __init__(self, polyglot):
@@ -21,7 +21,7 @@ class Controller(polyinterface.Controller):
         self.speakers = []
 
     def start(self):
-        LOGGER.info('Starting Sonos Polyglot v2 NodeServer.')
+        LOGGER.info('Starting Sonos Polyglot v2 NodeServer version {}'.format(VERSION))
         self.discover()
 
     def shortPoll(self):
@@ -36,12 +36,11 @@ class Controller(polyinterface.Controller):
 
     def discover(self):
         LOGGER.info('Starting Speaker Discovery...')
-        speakers = soco.discovery()
+        speakers = soco.discover()
         if speakers:
-            LOGGER.info('Found Speakers {}'.format(speakers))
+            LOGGER.info('Found {} Speaker(s).'.format(len(speakers)))
             for speaker in speakers:
                 address = speaker.uid[8:22].lower()
-                LOGGER.info('Adding Speaker Node: {}'.format(address))
                 self.addNode(Speaker(self, self.address, address, speaker.player_name, speaker.ip_address))
         else:
             LOGGER.info('No Speakers found. Are they powered on?')
@@ -57,72 +56,71 @@ class Speaker(polyinterface.Node):
         super(Speaker, self).__init__(parent, primary, address, 'Sonos {}'.format(name))
 
     def start(self):
-        LOGGER.info("{} added. Updating IP information in ISY.")
-        ip_addr = self.ip.split('.')
-        for ind, driver in enumerate(('GV1', 'GV2', 'GV3', 'GV4')):
-                self.setDriver(driver, ip_addr[ind], force = True)
-        self.update(True)
+        LOGGER.info("{} added. Updating information in ISY.".format(self.name))
+        self.update()
 
-    def update(self, force = False):
+    def update(self):
         try:
-            self.setDriver('ST', self.zone.volume, force = force)
-            self.setDriver('GV1', self.zone.bass, force = force)
-            self.setDriver('GV2', self.zone.treble, force = force)
+            self.setDriver('ST', self.zone.volume)
+            self.setDriver('GV1', self.zone.bass)
+            self.setDriver('GV2', self.zone.treble)
         except requests.exceptions.ConnectionError as e:
-            LOGGER.error('Connection error to ISY: %s', e)
+            LOGGER.error('Connection error to Speaker or ISY.: %s', e)
 
-    def query(self, **kwargs):
+    def query(self, command):
         self.update()
         self.reportDrivers()
 
-    def _play(self, **kwargs):
+    def _play(self, command):
         self.zone.play()
 
-    def _stop(self, **kwargs):
+    def _stop(self, command):
         self.zone.stop()
 
-    def _pause(self, **kwargs):
+    def _pause(self, command):
         self.zone.pause()
 
-    def _next(self, **kwargs):
+    def _next(self, command):
         self.zone.next()
 
-    def _previous(self, **kwargs):
+    def _previous(self, command):
         try:
             self.zone.previous()
         except:
             LOGGER.info("Error in command 'previous'. This typically means that the station or mode you are in doesn't support it.")
 
-    def _partymode(self, **kwargs):
+    def _partymode(self, command):
         self.zone.partymode()
 
-    def _mute(self, **kwargs):
+    def _mute(self, command):
         if self.zone.mute:
             self.zone.mute = False
         else:
             self.zone.mute = True
 
-    def _volume(self, **kwargs):
-        val = kwargs.get('value')
+    def _volume(self, command):
+        val = command.get('value')
         if val:
             self.zone.volume = int(val)
             self.setDriver('ST', int(val), 56)
 
-    def _bass(self, **kwargs):
-        val = kwargs.get('value')
+    def _bass(self, command):
+        val = command.get('value')
         if val > -11 or val < 11:
             self.zone.bass = val
             self.setDriver('GV1', int(val), 56)
 
-    def _treble(self, **kwargs):
-        val = kwargs.get('value')
+    def _treble(self, command):
+        val = command.get('value')
         if val > -11 or val < 11:
             self.zone.treble = val
             self.setDriver('GV2', int(val), 56)
 
-    drivers = { 'GV1': [0, 56, int], 'GV2': [0, 56, int],
-                'GV3': [0, 56, int], 'GV4': [0, 56, int],
-                'ST': [0, 51, int] }
+    drivers = [{'driver': 'GV1', 'value': 0, 'uom': '56'},
+                {'driver': 'GV2', 'value': 0, 'uom': '56'},
+                {'driver': 'GV3', 'value': 0, 'uom': '56'},
+                {'driver': 'GV4', 'value': 0, 'uom': '56'},
+                {'driver': 'ST', 'value': 0, 'uom': '51'}]
 
     commands = {    'PLAY': _play,
                     'STOP': _stop,

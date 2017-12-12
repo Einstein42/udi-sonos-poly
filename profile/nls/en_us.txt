@@ -1,7 +1,3 @@
-# Sonos Controller
-ND-sonoscontrol-NAME = Sonos Controller
-CMD-sctl-DISCOVER-NAME = Discover Speakers
-
 # Sonos Speakers
 ND-sonosspeaker-NAME = Sonos Speaker
 ST-sspk-NAME = Speaker State
