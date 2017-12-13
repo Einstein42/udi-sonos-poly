@@ -76,26 +76,38 @@ class Speaker(polyinterface.Node):
     def _play(self, command):
         try:
             self.zone.play()
-        except (soco.exceptions.SoCoUPnPException):
-            LOGGER.error('Transition not available. This typically means no music is selected.')
+        except:
+            LOGGER.info('Transition not available. This typically means no music is selected.')
 
     def _stop(self, command):
-        self.zone.stop()
+        try:
+            self.zone.stop()
+        except:
+            LOGGER.info('Transition not available. This typically means no music is selected.')
 
     def _pause(self, command):
-        self.zone.pause()
+        try:
+            self.zone.pause()
+        except:
+            LOGGER.info('Transition not available. This typically means no music is selected.')
 
     def _next(self, command):
-        self.zone.next()
+        try:
+            self.zone.next()
+        except:
+            LOGGER.info('This typically means that the station or mode you are in doesn\'t support it.')
 
     def _previous(self, command):
         try:
             self.zone.previous()
         except:
-            LOGGER.info("Error in command 'previous'. This typically means that the station or mode you are in doesn't support it.")
+            LOGGER.info('This typically means that the station or mode you are in doesn\'t support it.')
 
     def _partymode(self, command):
-        self.zone.partymode()
+        try:
+            self.zone.partymode()
+        except:
+            LOGGER.info('Your Sonos didn\'t like that. Make sure you are doing things correctly.')
 
     def _mute(self, command):
         if self.zone.mute:
