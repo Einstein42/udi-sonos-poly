@@ -69,7 +69,7 @@ class Speaker(polyinterface.Node):
         except requests.exceptions.ConnectionError as e:
             LOGGER.error('Connection error to Speaker or ISY.: %s', e)
 
-    def query(self, command):
+    def query(self, command = None):
         self.update()
         self.reportDrivers()
 
