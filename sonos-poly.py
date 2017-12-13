@@ -74,7 +74,10 @@ class Speaker(polyinterface.Node):
         self.reportDrivers()
 
     def _play(self, command):
-        self.zone.play()
+        try:
+            self.zone.play()
+        except (soco.exceptions.SoCoUPnPException):
+            LOGGER.error('Transition not available. This typically means no music is selected.')
 
     def _stop(self, command):
         self.zone.stop()
