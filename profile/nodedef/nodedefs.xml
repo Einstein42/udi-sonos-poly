@@ -4,8 +4,8 @@
     <nodeDef id="controller" nls="ctl">
         <editors />
         <sts>
-			<st id="ST" editor="bool" />
-		</sts>
+            <st id="ST" editor="bool" />
+        </sts>
         <cmds>
             <sends />
             <accepts>
@@ -13,13 +13,13 @@
             </accepts>
         </cmds>
     </nodeDef>
-	<!-- Sonos Speakers -->
+    <!-- Sonos Speakers -->
     <nodeDef id="sonosspeaker" nls="sspk">
         <editors />
         <sts>
             <st id="ST" editor="svolume" />
-			<st id="GV1" editor="sinc" /> 
-            <st id="GV2" editor="sinc" /> 
+            <st id="GV1" editor="sinc" />
+            <st id="GV2" editor="sinc" />
         </sts>
         <cmds>
             <sends />
@@ -32,14 +32,14 @@
                 </cmd	>
                 <cmd id="TREBLE">
                     <p id="" editor="sinc" optional="T" init="GV2" />
-				</cmd>
+                </cmd>
                 <cmd id="PLAY" />
-				<cmd id="PAUSE" />
+                <cmd id="PAUSE" />
                 <cmd id="STOP" />
-				<cmd id="PREVIOUS" />
-				<cmd id="NEXT" />
-				<cmd id="MUTE" />
-				<cmd id="PARTYMODE" />
+                <cmd id="PREVIOUS" />
+                <cmd id="NEXT" />
+                <cmd id="MUTE" />
+                <cmd id="PARTYMODE" />
             </accepts>
         </cmds>
     </nodeDef>

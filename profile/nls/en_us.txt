@@ -1,5 +1,12 @@
+# controller
+ND-controller-NAME = Sonos Controller
+ND-controller-ICON = GenericCtl
+CMD-ctl-DISCOVER-NAME = Re-Discover
+ST-ctl-ST-NAME = NodeServer Online
+
 # Sonos Speakers
 ND-sonosspeaker-NAME = Sonos Speaker
+ND-sonosspeaker-ICON = GenericRsp
 ST-sspk-NAME = Speaker State
 ST-sspk-ST-NAME = Volume
 ST-sspk-GV1-NAME = Bass
@@ -17,4 +24,3 @@ CMD-sspk-PARTYMODE-NAME = PartyMode
 CMD-sspk-VOLUME-NAME = Volume
 CMD-sspk-BASS-NAME = Bass
 CMD-sspk-TREBLE-NAME = Treble
-
