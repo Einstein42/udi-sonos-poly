@@ -1,18 +1,15 @@
 # controller
 ND-controller-NAME = Sonos Controller
 ND-controller-ICON = GenericCtl
-CMD-ctl-DISCOVER-NAME = Re-Discover
 ST-ctl-ST-NAME = NodeServer Online
+CMD-ctl-DISCOVER-NAME = Re-Discover
 
 # Sonos Speakers
 ND-sonosspeaker-NAME = Sonos Speaker
 ND-sonosspeaker-ICON = GenericRsp
-ST-sspk-NAME = Speaker State
 ST-sspk-ST-NAME = Volume
 ST-sspk-GV1-NAME = Bass
 ST-sspk-GV2-NAME = Treble
-ST-sspk-GV3-NAME = GV3
-ST-sspk-GV4-NAME = GV4
 
 CMD-sspk-PLAY-NAME = Play
 CMD-sspk-PAUSE-NAME = Pause
@@ -20,7 +17,7 @@ CMD-sspk-STOP-NAME = Stop
 CMD-sspk-PREVIOUS-NAME = Previous
 CMD-sspk-NEXT-NAME = Next
 CMD-sspk-MUTE-NAME = Mute
-CMD-sspk-PARTYMODE-NAME = PartyMode
+CMD-sspk-PARTYMODE-NAME = Party Mode
 CMD-sspk-VOLUME-NAME = Volume
 CMD-sspk-BASS-NAME = Bass
 CMD-sspk-TREBLE-NAME = Treble
