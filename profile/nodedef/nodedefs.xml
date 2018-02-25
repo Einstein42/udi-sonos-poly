@@ -25,13 +25,13 @@
             <sends />
             <accepts>
                 <cmd id="VOLUME">
-                    <p id="" editor="svolume" optional="T" init="ST" />
+                    <p id="" editor="svolume" init="ST" />
                 </cmd	>
                 <cmd id="BASS">
-                    <p id="" editor="sinc" optional="T" init="GV1" />
+                    <p id="" editor="sinc" init="GV1" />
                 </cmd	>
                 <cmd id="TREBLE">
-                    <p id="" editor="sinc" optional="T" init="GV2" />
+                    <p id="" editor="sinc" init="GV2" />
                 </cmd>
                 <cmd id="PLAY" />
                 <cmd id="PAUSE" />

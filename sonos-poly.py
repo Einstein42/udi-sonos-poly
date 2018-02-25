@@ -75,7 +75,7 @@ class Speaker(polyinterface.Node):
         except requests.exceptions.ConnectionError as e:
             LOGGER.error('Connection error to Speaker or ISY.: %s', e)
 
-    def query(self, command = None):
+    def query(self, command=None):
         self.update()
         self.reportDrivers()
 
@@ -122,27 +122,36 @@ class Speaker(polyinterface.Node):
             self.zone.mute = True
 
     def _volume(self, command):
-        val = command.get('value')
-        if val:
-            self.zone.volume = int(val)
-            self.setDriver('ST', int(val))
+        try:
+            val = int(command.get('value'))
+        except:
+            LOGGER.error('volume: Invalid argument')
+        else:
+            self.zone.volume = val
+            self.setDriver('ST', val)
 
     def _bass(self, command):
-        val = command.get('value')
-        if val > -11 or val < 11:
-            self.zone.bass = val
-            self.setDriver('GV1', int(val))
+        try:
+            val = int(command.get('value'))
+        except:
+            LOGGER.error('bass: Invalid argument')
+        else:
+            if -10 <= val <= 10:
+                self.zone.bass = val
+                self.setDriver('GV1', val)
 
     def _treble(self, command):
-        val = command.get('value')
-        if val > -11 or val < 11:
-            self.zone.treble = val
-            self.setDriver('GV2', int(val))
+        try:
+            val = int(command.get('value'))
+        except:
+            LOGGER.error('treble: Invalid argument')
+        else:
+            if -10 <= val <= 10:
+                self.zone.treble = val
+                self.setDriver('GV2', val)
 
     drivers = [{'driver': 'GV1', 'value': 0, 'uom': '56'},
                 {'driver': 'GV2', 'value': 0, 'uom': '56'},
-                {'driver': 'GV3', 'value': 0, 'uom': '56'},
-                {'driver': 'GV4', 'value': 0, 'uom': '56'},
                 {'driver': 'ST', 'value': 0, 'uom': '51'}]
 
     commands = {    'PLAY': _play,
