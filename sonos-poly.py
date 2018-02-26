@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 """
 Sonos NodeServer for UDI Polyglot v2
 by Einstein.42 (James Milne) milne.james@gmail.com
@@ -11,14 +11,20 @@ import requests
 import json
 
 LOGGER = polyinterface.LOGGER
-SERVERDATA = json.load(open('server.json'))
-VERSION = SERVERDATA['credits'][0]['version']
+
+with open('server.json') as data:
+    SERVERDATA = json.load(data)
+    data.close()
+try:
+    VERSION = SERVERDATA['credits'][0]['version']
+except (KeyError, ValueError):
+    LOGGER.info('Version not found in server.json.')
+    VERSION = '0.0.0'
 
 class Controller(polyinterface.Controller):
     def __init__(self, polyglot):
-        super(Controller, self).__init__(polyglot)
+        super().__init__(polyglot)
         self.name = 'Sonos Controller'
-        self.speakers = []
 
     def start(self):
         LOGGER.info('Starting Sonos Polyglot v2 NodeServer version {}'.format(VERSION))
@@ -51,12 +57,12 @@ class Controller(polyinterface.Controller):
     commands = {'DISCOVER': discover}
 
 class Speaker(polyinterface.Node):
-    def __init__(self, parent, primary, address, name, ip):
+    def __init__(self, controller, primary, address, name, ip):
         self.ip = ip
         self.zone = soco.SoCo(self.ip)
         LOGGER.info('Sonos Speaker: {}@{} Current Volume: {}'\
                     .format(name, ip, self.zone.volume))
-        super(Speaker, self).__init__(parent, primary, address, 'Sonos {}'.format(name))
+        super().__init__(controller, primary, address, 'Sonos {}'.format(name))
 
     def start(self):
         LOGGER.info("{} ready to rock!".format(self.name))
@@ -69,7 +75,7 @@ class Speaker(polyinterface.Node):
         except requests.exceptions.ConnectionError as e:
             LOGGER.error('Connection error to Speaker or ISY.: %s', e)
 
-    def query(self, command = None):
+    def query(self, command=None):
         self.update()
         self.reportDrivers()
 
@@ -116,27 +122,36 @@ class Speaker(polyinterface.Node):
             self.zone.mute = True
 
     def _volume(self, command):
-        val = command.get('value')
-        if val:
-            self.zone.volume = int(val)
-            self.setDriver('ST', int(val))
+        try:
+            val = int(command.get('value'))
+        except:
+            LOGGER.error('volume: Invalid argument')
+        else:
+            self.zone.volume = val
+            self.setDriver('ST', val)
 
     def _bass(self, command):
-        val = command.get('value')
-        if val > -11 or val < 11:
-            self.zone.bass = val
-            self.setDriver('GV1', int(val))
+        try:
+            val = int(command.get('value'))
+        except:
+            LOGGER.error('bass: Invalid argument')
+        else:
+            if -10 <= val <= 10:
+                self.zone.bass = val
+                self.setDriver('GV1', val)
 
     def _treble(self, command):
-        val = command.get('value')
-        if val > -11 or val < 11:
-            self.zone.treble = val
-            self.setDriver('GV2', int(val))
+        try:
+            val = int(command.get('value'))
+        except:
+            LOGGER.error('treble: Invalid argument')
+        else:
+            if -10 <= val <= 10:
+                self.zone.treble = val
+                self.setDriver('GV2', val)
 
     drivers = [{'driver': 'GV1', 'value': 0, 'uom': '56'},
                 {'driver': 'GV2', 'value': 0, 'uom': '56'},
-                {'driver': 'GV3', 'value': 0, 'uom': '56'},
-                {'driver': 'GV4', 'value': 0, 'uom': '56'},
                 {'driver': 'ST', 'value': 0, 'uom': '51'}]
 
     commands = {    'PLAY': _play,

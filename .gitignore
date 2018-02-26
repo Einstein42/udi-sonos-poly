@@ -3,6 +3,7 @@
 test/
 polyinterface
 polyinterface/
+profile.zip
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
