@@ -27,7 +27,7 @@ class Controller(polyinterface.Controller):
         self.name = 'Sonos Controller'
 
     def start(self):
-        LOGGER.info('Starting Sonos Polyglot v2 NodeServer version {}'.format(VERSION))
+        LOGGER.info('Starting Sonos Polyglot v2 NodeServer version {}, polyinterface: {}'.format(VERSION, polyinterface.__version__))
         self.discover()
 
     def shortPoll(self):
