@@ -17,6 +17,7 @@ CMD-sspk-STOP-NAME = Stop
 CMD-sspk-PREVIOUS-NAME = Previous
 CMD-sspk-NEXT-NAME = Next
 CMD-sspk-MUTE-NAME = Mute
+CMD-sspk-UNMUTE-NAME = UnMute
 CMD-sspk-PARTYMODE-NAME = Party Mode
 CMD-sspk-VOLUME-NAME = Volume
 CMD-sspk-BASS-NAME = Bass

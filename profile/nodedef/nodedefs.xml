@@ -39,6 +39,7 @@
                 <cmd id="PREVIOUS" />
                 <cmd id="NEXT" />
                 <cmd id="MUTE" />
+                <cmd id="UNMUTE" />
                 <cmd id="PARTYMODE" />
             </accepts>
         </cmds>
