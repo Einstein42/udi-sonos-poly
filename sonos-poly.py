@@ -81,7 +81,13 @@ class Speaker(polyinterface.Node):
         self.reportDrivers()
 
     def _get_state(self):
-        return 100 if self.zone.get_current_transport_info()['current_transport_state'] == "PLAYING" else 0
+        text = self.zone.get_current_transport_info()['current_transport_state'].upper()
+        return {
+            'PLAYING': '0',
+            'TRANSITIONING': '1',
+            'PAUSED_PLAYBACK': '2',
+            'STOPPED': '3'
+        }.get(text, '3')
 
     def _play(self, command):
         try:
@@ -160,7 +166,7 @@ class Speaker(polyinterface.Node):
     drivers = [{'driver': 'GV1', 'value': 0, 'uom': '56'},
                 {'driver': 'GV2', 'value': 0, 'uom': '56'},
                 {'driver': 'SVOL', 'value': 0, 'uom': '51'},
-                {'driver': 'ST', 'value': 0, 'uom': '78'}]
+                {'driver': 'ST', 'value': 0, 'uom': '25'}]
 
     commands = {    'PLAY': _play,
                     'STOP': _stop,

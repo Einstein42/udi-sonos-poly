@@ -23,3 +23,8 @@ CMD-sspk-PARTYMODE-NAME = Party Mode
 CMD-sspk-VOLUME-NAME = Volume
 CMD-sspk-BASS-NAME = Bass
 CMD-sspk-TREBLE-NAME = Treble
+
+PLAY_MODE-0 = Playing
+PLAY_MODE-1 = Transitioning
+PLAY_MODE-2 = Paused
+PLAY_MODE-3 = Stopped
