@@ -69,7 +69,8 @@ class Speaker(polyinterface.Node):
 
     def update(self):
         try:
-            self.setDriver('ST', self.zone.volume)
+            self.setDriver('ST', self._get_state())
+            self.setDriver('SVOL', self.zone.volume)
             self.setDriver('GV1', self.zone.bass)
             self.setDriver('GV2', self.zone.treble)
         except requests.exceptions.ConnectionError as e:
@@ -79,21 +80,33 @@ class Speaker(polyinterface.Node):
         self.update()
         self.reportDrivers()
 
+    def _get_state(self):
+        text = self.zone.get_current_transport_info()['current_transport_state'].upper()
+        return {
+            'PLAYING': '0',
+            'TRANSITIONING': '1',
+            'PAUSED_PLAYBACK': '2',
+            'STOPPED': '3'
+        }.get(text, '3')
+
     def _play(self, command):
         try:
             self.zone.play()
+            self.setDriver('ST', self._get_state())
         except:
             LOGGER.info('Transition not available. This typically means no music is selected.')
 
     def _stop(self, command):
         try:
             self.zone.stop()
+            self.setDriver('ST', self._get_state())
         except:
             LOGGER.info('Transition not available. This typically means no music is selected.')
 
     def _pause(self, command):
         try:
             self.zone.pause()
+            self.setDriver('ST', self._get_state())
         except:
             LOGGER.info('Transition not available. This typically means no music is selected.')
 
@@ -128,7 +141,7 @@ class Speaker(polyinterface.Node):
             LOGGER.error('volume: Invalid argument')
         else:
             self.zone.volume = val
-            self.setDriver('ST', val)
+            self.setDriver('SVOL', val)
 
     def _bass(self, command):
         try:
@@ -152,7 +165,8 @@ class Speaker(polyinterface.Node):
 
     drivers = [{'driver': 'GV1', 'value': 0, 'uom': '56'},
                 {'driver': 'GV2', 'value': 0, 'uom': '56'},
-                {'driver': 'ST', 'value': 0, 'uom': '51'}]
+                {'driver': 'SVOL', 'value': 0, 'uom': '51'},
+                {'driver': 'ST', 'value': 0, 'uom': '25'}]
 
     commands = {    'PLAY': _play,
                     'STOP': _stop,

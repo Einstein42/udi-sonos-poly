@@ -3,6 +3,9 @@
     <editor id="bool">
         <range uom="2" subset="0,1" />
     </editor>
+    <editor id="sstat">
+        <range uom="25" subset="0-3" nls="PLAY_MODE" />
+    </editor>
     <editor id="sinc">
         <range uom="56" min="-10" max="10" step="1" />
     </editor>

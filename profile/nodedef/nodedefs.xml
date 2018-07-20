@@ -17,7 +17,8 @@
     <nodeDef id="sonosspeaker" nls="sspk">
         <editors />
         <sts>
-            <st id="ST" editor="svolume" />
+            <st id="ST" editor="sstat" />
+            <st id="SVOL" editor="svolume" />
             <st id="GV1" editor="sinc" />
             <st id="GV2" editor="sinc" />
         </sts>
@@ -25,7 +26,7 @@
             <sends />
             <accepts>
                 <cmd id="VOLUME">
-                    <p id="" editor="svolume" init="ST" />
+                    <p id="" editor="svolume" init="SVOL" />
                 </cmd	>
                 <cmd id="BASS">
                     <p id="" editor="sinc" init="GV1" />
