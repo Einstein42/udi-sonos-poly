@@ -25,12 +25,15 @@ class Controller(polyinterface.Controller):
     def __init__(self, polyglot):
         super().__init__(polyglot)
         self.name = 'Sonos Controller'
+        self.discovery = False
 
     def start(self):
         LOGGER.info('Starting Sonos Polyglot v2 NodeServer version {}, polyinterface: {}'.format(VERSION, polyinterface.__version__))
         self.discover()
 
     def shortPoll(self):
+        if self.discovery:
+            return
         for node in self.nodes:
             self.nodes[node].update()
 
@@ -42,6 +45,7 @@ class Controller(polyinterface.Controller):
 
     def discover(self, command = None):
         LOGGER.info('Starting Speaker Discovery...')
+        self.discovery = True
         speakers = soco.discover()
         if speakers:
             LOGGER.info('Found {} Speaker(s)'.format(len(speakers)))
@@ -53,6 +57,7 @@ class Controller(polyinterface.Controller):
                     LOGGER.info('Speaker {} already configured.'.format(speaker.player_name))
         else:
             LOGGER.info('No Speakers found. Are they powered on?')
+        self.discovery = False
 
     commands = {'DISCOVER': discover}
 
