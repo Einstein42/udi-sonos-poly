@@ -42,7 +42,7 @@
                 <cmd id="MUTE" />
                 <cmd id="UNMUTE" />
                 <cmd id="PARTYMODE" />
-                <cmd id="REMOVEPARTYMODE" />
+                <cmd id="NOPARTYMODE" />
             </accepts>
         </cmds>
     </nodeDef>
