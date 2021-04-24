@@ -20,6 +20,7 @@ CMD-sspk-NEXT-NAME = Next
 CMD-sspk-MUTE-NAME = Mute
 CMD-sspk-UNMUTE-NAME = UnMute
 CMD-sspk-PARTYMODE-NAME = Party Mode
+CMD-sspk-REMOVEPARTYMODE-NAME = Remove Party Mode
 CMD-sspk-VOLUME-NAME = Volume
 CMD-sspk-BASS-NAME = Bass
 CMD-sspk-TREBLE-NAME = Treble
