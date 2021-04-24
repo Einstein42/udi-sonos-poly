@@ -133,7 +133,7 @@ class Speaker(polyinterface.Node):
         except:
             LOGGER.info('Your Sonos didn\'t like that. Make sure you are doing things correctly.')
 
-    def _partymodeoff(self, command):
+    def _partymoderemove(self, command):
         try:
             self.zone.unjoin()
         except:
@@ -187,7 +187,7 @@ class Speaker(polyinterface.Node):
                     'NEXT': _next,
                     'PREVIOUS': _previous,
                     'PARTYMODE': _partymode,
-                    'NOPARTYMODE': _partymodeoff,
+                    'REMOVEFROMPARTY': _partymoderemove,
                     'MUTE': _mute,
                     'UNMUTE': _unmute,
                     'BASS': _bass,
