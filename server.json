@@ -1,5 +1,5 @@
 {
-    "name": "Sonos",
+    "name": "Sonos-beta",
     "docs": "https://github.com/Einstein42/udi-sonos-poly",
     "type": "python3",
     "executable": "sonos-poly.py",
